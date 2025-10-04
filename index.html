@@ -1,6 +1,155 @@
-<!DOCTYPE html><html><head><title>My Site</title></head><body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Your Site - Documents Hub</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f9f9f9;
+    color: #333;
+    margin: 0; padding: 0;
+  }
+  header {
+    background-color: #4a90e2;
+    color: white;
+    padding: 40px 20px;
+    text-align: center;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 3rem;
+  }
+  header p {
+    font-size: 1.3rem;
+    margin: 8px 0 0;
+    font-weight: 500;
+  }
+  main {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+  main p.description {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    color: #555;
+  }
+  .filters {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+  }
+  .filters input[type="text"], .filters select {
+    flex: 1;
+    padding: 12px 15px;
+    font-size: 1rem;
+    border: 2px solid #4a90e2;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  .filters input[type="text"]:focus, .filters select:focus {
+    border-color: #357ABD;
+  }
+  ul.file-list {
+    list-style: none;
+    padding-left: 0;
+  }
+  ul.file-list li {
+    background: white;
+    margin-bottom: 12px;
+    padding: 15px 20px;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgb(0 0 0 / 0.1);
+    font-size: 1.1rem;
+  }
+  ul.file-list li a {
+    color: #4a90e2;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  ul.file-list li a:hover {
+    text-decoration: underline;
+  }
+  footer {
+    margin-top: 60px;
+    text-align: center;
+    padding: 30px 20px;
+    background: #f0f0f0;
+  }
+  footer img.qr-code {
+    max-width: 160px;
+    height: auto;
+  }
+  footer p {
+    font-size: 1.1rem;
+    margin-top: 15px;
+    color: #666;
+  }
+</style>
+</head>
+<body>
 
-<h1>Hello from GitHub Pages!</h1>
-<a href="Geotechnical_Engineering.pdf" download>Download PDF file</a>
+<header>
+  <h1>Ayush Kushwaha</h1>
+  <p>Software Developer & Tech Enthusiast</p>
+</header>
 
-</body></html>
+<main>
+  <p class="description">Site to obtain important documents through internet.</p>
+
+  <div class="filters">
+    <input type="text" id="searchBox" placeholder="Search for files by name..." oninput="filterFiles()" />
+    <select id="fileType" onchange="filterFiles()">
+      <option value="all">All types</option>
+      <option value=".doc">.doc</option>
+      <option value=".pdf">.pdf</option>
+      <option value=".png">.png</option>
+      <option value=".jpeg">.jpeg</option>
+      <option value=".jpg">.jpg</option>
+      <option value="misc">Miscellaneous</option>
+    </select>
+  </div>
+
+  <ul class="file-list" id="fileList">
+    <li data-type=".pdf"><a href="Geotechnical_Engineering.pdf" download>Geotechnical Engineering.pdf</a></li>
+    <li data-type=".doc"><a href="Project_Proposal.doc" download>Project Proposal.doc</a></li>
+    <li data-type=".png"><a href="site_map.png" download>Site Map.png</a></li>
+    <li data-type=".jpeg"><a href="profile_pic.jpeg" download>Profile Pic.jpeg</a></li>
+    <li data-type=".jpg"><a href="banner.jpg" download>Banner Image.jpg</a></li>
+    <li data-type="misc"><a href="archive.zip" download>Archive.zip</a></li>
+  </ul>
+</main>
+
+<footer>
+  <img class="qr-code" src="donation_qr.png" alt="Donation QR Code" />
+  <p>If you find this site useful, please consider donating to keep providing content.</p>
+</footer>
+
+<script>
+  function filterFiles() {
+    const searchValue = document.getElementById('searchBox').value.toLowerCase();
+    const selectedType = document.getElementById('fileType').value;
+    const files = document.querySelectorAll('#fileList li');
+
+    files.forEach(file => {
+      const fileName = file.textContent.toLowerCase();
+      const fileType = file.getAttribute('data-type');
+
+      const matchesSearch = fileName.includes(searchValue);
+      const matchesType = selectedType === 'all' || 
+                          (selectedType === 'misc' ? !['.doc', '.pdf', '.png', '.jpeg', '.jpg'].includes(fileType) : fileType === selectedType);
+
+      if (matchesSearch && matchesType) {
+        file.style.display = '';
+      } else {
+        file.style.display = 'none';
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
